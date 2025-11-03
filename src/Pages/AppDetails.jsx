@@ -6,11 +6,11 @@ import { FaRegStar } from "react-icons/fa";
 
 function AppDetails() {
     const { toyId } = useParams()
-    const { toys, loading } = useContext(ToysContext)
-    if (loading) return <p>loading Toys..</p>
+    const { toys } = useContext(ToysContext)
+   
     const toyDetail = toys.find(product => product.id === toyId)
     if (!toyDetail) return <p>Toy not found</p>;
-
+ 
   return (
       <MyContainer className='h-full'>
           <div className=' pt-40 flex flex-col lg:flex-row lg:justify-between'>

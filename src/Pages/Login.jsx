@@ -8,27 +8,23 @@ export default function LoginForm({  }) {
     
   const navigate = useNavigate()
   const location = useLocation()
-  const from = location.state || "/";
+  const from = location.state?.from?.pathname || "/";
   const [errors, setErrors] = useState({});
   const [show, setShow] = useState(false)
-  const { user, setUser, signInwithGoogle, signIn,setLoading} = useContext(ToysContext)
+  const { user, setUser, signInwithGoogle, signIn} = useContext(ToysContext)
    const handleGoogleSignin = () => {
     console.log("google signin");
     signInwithGoogle()
       .then((res) => {
         console.log(res);
-        setLoading(false);
         setUser(res.user);
         navigate(from);
-
       })
       .catch((e) => {
         console.log(e);
       });
   };
-useEffect(() => {
-  if (user) navigate("/");
-}, [user]);
+navigate(from, { replace: true });
 
   const handleSubmit =async (e) => {
       e.preventDefault();
@@ -40,7 +36,6 @@ useEffect(() => {
     signIn(email, password)
       .then((res)=> {
         console.log(res)
-        setLoading(false);
         setUser(res.user)
         navigate(from)
         console.log(user)

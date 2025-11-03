@@ -14,31 +14,34 @@ export const ToysProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true);
     const createUser = (email, password) => {
-    return createUserWithEmailAndPassword(auth,email,password)
+        return createUserWithEmailAndPassword(auth, email, password)
     }
        useEffect(() => {
        const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
            setUser(currentUser)
+           setLoading(false)
                 console.log("Current User:", currentUser);
       })  
      return () => {
        unSubscribe()
      }
        }, [])
-    const signIn = (email,password) => {
-        return signInWithEmailAndPassword(auth,email,password)
+    const signIn = (email, password) => {
+                setLoading(true)
+        return signInWithEmailAndPassword(auth, email, password)
     }
      useEffect(() => {
          fetch('/Toys.json').then((res) => res.json()).then((data) => {
                  setToys(data);
-                 setLoading(false);
+               
              }).catch((error) => {
                  console.log(error)
-                 setLoading(false);
+                 
          })
      }, [])
     const provider =new GoogleAuthProvider()
     const signInwithGoogle = () => {
+        setLoading(true)
         return signInWithPopup(auth,provider)
     }
  const updatePr = (displayName, photoURL) => {
@@ -49,6 +52,7 @@ export const ToysProvider = ({ children }) => {
 };
 
     const logOut = () => {
+        setLoading(true)
         return signOut(auth)
     }
     const allData = {

@@ -5,6 +5,7 @@ import Profile from "../Pages/Profile";
 import AppDetails from "../Pages/AppDetails";
 import LoginForm from "../Pages/Login";
 import SignupForm from "../Pages/Signup";
+import PrivateRoute from "../Components/PrivateRoute";
 const router = createBrowserRouter([
      {
     path: "/",
@@ -19,7 +20,9 @@ const router = createBrowserRouter([
                 element:<Profile></Profile>
             }, {
                 path: "/appDetails/:id",
-                element:<AppDetails></AppDetails>
+                element: <PrivateRoute>
+                    <AppDetails></AppDetails>
+                </PrivateRoute>
             }, {
                 path: "/login",
                 element: <LoginForm></LoginForm>
