@@ -4,7 +4,15 @@ import { Link, NavLink } from 'react-router'
 import { ToysContext } from '../Context/Context'
 
 function Navbar() {
-  const{user,setuser,logOut}=useContext(ToysContext)
+  const { user, setuser, logOut } = useContext(ToysContext) 
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+      setuser(null)
+      }).catch((e) => {
+      console.log(e)
+    })
+  }
   return (
       <MyContainer className="">
           <div className="navbar bg-base-100 shadow-sm bg-toy rounded-2xl">
@@ -33,10 +41,10 @@ function Navbar() {
               <div className=''>
     <div className="dropdown dropdown-end">
       <div tabIndex="0" role="button" className="avatar">
-        <div className="w-10 rounded-full">
+        <div className="w-10  rounded-full">
           <img
             alt="Tailwind CSS Navbar component"
-            src="https://i.ibb.co.com/qFd49Bvj/31046197.jpg" />
+            src={user?.photoURL || "https://i.ibb.co.com/V0NKMLfC/31046197.jpg"} />
         </div>
       </div>
       <ul
@@ -50,9 +58,9 @@ function Navbar() {
       </ul>
     </div>
               </div>
-                <div>
-                <Link to='/login' className="btn">LogOut</Link>
-               </div>
+               <div onClick={handleLogout}>
+  <button className="btn">LogOut</button>
+</div>
               
           </div>:  <div className="gap-2 navbar-end">
               <div className=''>
@@ -61,7 +69,7 @@ function Navbar() {
         <div className="w-10 rounded-full">
           <img
             alt="Tailwind CSS Navbar component"
-            src="https://i.ibb.co.com/qFd49Bvj/31046197.jpg" />
+            src="https://i.ibb.co.com/V0NKMLfC/31046197.jpg" />
         </div>
       </div>
       <ul

@@ -1,17 +1,43 @@
-import React, { useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
+import { ToysContext } from "../Context/Context";
+import { useLocation, useNavigate } from "react-router";
 
 export default function SignupForm() {
+    const {createUser,updatePr,setLoading,user,setUser}=useContext(ToysContext)
+  const location = useLocation()
+  const from = location.state || "/";
+  const navigate = useNavigate();
+  useEffect(() => {
+  if (user) {
+    navigate("/");
+  }
+}, [user]);
+
     const handleSubmit =async (e) => {
       e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+    const photoUrl = form.photoUrl.value;
+      const name = form.name.value;
     const valid = validate(form);
-    setErrors(valid);
+      setErrors(valid);
+      createUser(email, password)
+        .then((res) => {
+         
+          setUser(res.user)
+          navigate(from)
+          setLoading(false)
+          updatePr(name, photoUrl).then((res) => {
+             console.log("profile updated")
+          })
+        })
+        .catch((e) => {
+        console.log(e)
+      })
    }
 
   const [errors, setErrors] = useState({});
-
   
   function validate(form) {
     const err = {};
@@ -50,6 +76,14 @@ export default function SignupForm() {
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">{errors.name}</p>
             )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1 mt-1">Photo Url</label>
+            <input
+              name="photoUrl"
+              className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+           
           </div>
         </div>
 

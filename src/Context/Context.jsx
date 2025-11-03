@@ -41,11 +41,13 @@ export const ToysProvider = ({ children }) => {
     const signInwithGoogle = () => {
         return signInWithPopup(auth,provider)
     }
-    const updatePr = (displayName, photoUrl,about) => {
-        return updateProfile(auth.currentUser, {
-            displayName,photoUrl,about
-        })
-    }
+ const updatePr = (displayName, photoURL) => {
+  return updateProfile(auth.currentUser, {
+    displayName,
+    photoURL
+  });
+};
+
     const logOut = () => {
         return signOut(auth)
     }
