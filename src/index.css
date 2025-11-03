@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@plugin "daisyui";
+.btn {
+    background: linear-gradient(30deg, #ff87b3, #f8db64, #74ffc8);
+    color: gray;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    margin: 0px 0px 0px 10px;
+    font-weight: bold;
+}
+.bg-toy {
+ background: linear-gradient(to right, #fbcfe8, #fef9c3, #bfdbfe  );
+    }
+body{
+    background-color: #f3f4f6;
+}
+.active{
+    background: linear-gradient(135deg, #6c47ff 0%, #a970ff 100%);
+        color: #fff ;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(124, 74, 255, 0.45);
+ }
