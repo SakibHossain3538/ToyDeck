@@ -2,19 +2,22 @@ import React, { useContext } from 'react'
 import MyContainer from '../MyContainer.jsx/MyContainer'
 import { Link, NavLink } from 'react-router'
 import { ToysContext } from '../Context/Context'
+import { toast, ToastContainer } from 'react-toastify'
 
 function Navbar() {
   const { user, setUser, logOut } = useContext(ToysContext) 
   const handleLogout = () => {
     logOut()
       .then(() => {
-      setUser(null)
+        setUser(null)
+        toast.success("Log Out Successful")
       }).catch((e) => {
-      console.log(e)
+        toast.error("logOut Failed")
     })
   }
   return (
-      <MyContainer className="">
+    <MyContainer className="">
+      <ToastContainer/>
           <div className="navbar bg-base-100 shadow-sm bg-toy rounded-2xl">
   <div className="navbar-start">
     <div className="dropdown">

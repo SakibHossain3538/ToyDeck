@@ -15,15 +15,14 @@ export default function LoginForm({  }) {
   const [show, setShow] = useState(false)
   const { user, setUser, signInwithGoogle, signIn ,setLoading,sendPassResetEmailFunc} = useContext(ToysContext)
    const handleGoogleSignin = () => {
-    console.log("google signin");
     signInwithGoogle()
       .then((res) => {
-        console.log(res);
         setUser(res.user);
-             toast.success("Login Success Full")
-             setTimeout(() => {
-            navigate(from, { replace: true });
-      }, 1000); 
+            toast.success("Login successful! ");
+      setTimeout(() => {
+        navigate(from, { replace: true });
+      }, 2000);
+    
     })
       .catch((e) => {
        toast.error(e.message);
@@ -83,7 +82,7 @@ const handleForgetPassword = async () => {
   try {
     setLoading(true);  
     await sendPassResetEmailFunc(email); 
-    toast.success("Check your email to reset password 📧");
+    toast.success("Check your email to reset password ");
     setLoading(false);
   } catch (error) {
     toast.error(error.message);
@@ -96,7 +95,7 @@ const handleForgetPassword = async () => {
       <h1 className="text-2xl font-bold mb-2">
         Welcome Back
       </h1>
-        <ToastContainer position="top-right" autoClose={3000} />
+        {/* <ToastContainer/> */}
       <p className="text-gray-600 mb-6"> Login to continue</p>
       <button
         type="button" className="w-full flex items-center justify-center gap-2 border-gray-300

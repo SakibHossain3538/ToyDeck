@@ -2,14 +2,13 @@ import React from 'react'
 import Navbar from '../Components/Navbar'
 import { Outlet, } from 'react-router'
 import Footer from '../Components/Footer'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
 function MainLayout() {
 
   return (
     <div>
-      <Navbar></Navbar>
       <ToastContainer></ToastContainer>
+      <Navbar></Navbar>
       <Outlet></Outlet>
       <Footer></Footer>
       </div>

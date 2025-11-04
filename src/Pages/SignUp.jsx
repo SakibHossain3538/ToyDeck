@@ -5,10 +5,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function SignupForm() {
     const {createUser,updatePr,setLoading,user,setUser,signInwithGoogle}=useContext(ToysContext)
+   if (loading) return <Spinner />
   const location = useLocation()
     const navigate = useNavigate();
-      const from = location.state?.from?.pathname || "/";
-  const [errors, setErrors] = useState({});
+    const from = location.state?.from?.pathname || "/";
+    const [errors, setErrors] = useState({});
 
   useEffect(() => {
   if (user) {
@@ -55,7 +56,7 @@ export default function SignupForm() {
       catch (error) {
     toast.error(error.message);
     setLoading(false);
-    console.log(error);
+  
   }
 };
   function validate({ name, photoUrl, email, password, agree }) {
@@ -81,7 +82,6 @@ export default function SignupForm() {
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-8 mt-6">
       <h1 className="text-2xl font-bold mb-2">Create an account</h1>
-     <ToastContainer/>
          <button
         type="button" className="w-full flex items-center justify-center mt-6 mb-4 border-gray-300
        rounded-lg hover:bg:gray-100 transition font-medium"

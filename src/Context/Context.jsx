@@ -6,6 +6,7 @@ import {
     signInWithEmailAndPassword, signInWithPopup, signOut,
     updateProfile,sendPasswordResetEmail
 } from "firebase/auth"
+import { toast } from "react-toastify";
 export const ToysContext = createContext();
 
 export const ToysProvider = ({ children }) => {
@@ -20,7 +21,6 @@ export const ToysProvider = ({ children }) => {
        const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
            setUser(currentUser)
            setLoading(false)
-                console.log("Current User:", currentUser);
       })  
      return () => {
        unSubscribe()
@@ -35,7 +35,7 @@ export const ToysProvider = ({ children }) => {
                  setToys(data);
                
              }).catch((error) => {
-                 console.log(error)
+                toast.error("Toys Are Not Available")
                  
          })
      }, [])
