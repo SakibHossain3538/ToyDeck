@@ -44,12 +44,11 @@ export const ToysProvider = ({ children }) => {
         setLoading(true)
         return signInWithPopup(auth,provider)
     }
- const updatePr = (displayName, photoURL) => {
-  return updateProfile(auth.currentUser, {
-    displayName,
-    photoURL
-  });
+     const updatePr = async (displayName, photoURL) => {
+  await updateProfile(auth.currentUser, { displayName, photoURL });
+          setUser({ ...auth.currentUser, displayName, photoURL });
 };
+
 
     const logOut = () => {
         setLoading(true)

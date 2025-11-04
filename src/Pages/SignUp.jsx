@@ -68,7 +68,7 @@ export default function SignupForm() {
       err.password = "Password must be at least 8 characters";
     if (!form.agree.checked) err.agree = "You must accept terms";
     if (!strongPass.test(password)) {
-     err.password = "Password must include At least 1 letter,1 number,1 special character";
+     err.password = "Password must include At least 6 digits,1 letter,1 number and 1 special character";
     }
     return err;
   }

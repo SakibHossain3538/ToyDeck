@@ -25,7 +25,8 @@ function Navbar() {
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
        <li><NavLink to="/">Home</NavLink></li>
-      <li><NavLink to="/profile">My Profile</NavLink></li>
+        <li><NavLink to="/profile">My Profile</NavLink></li>
+        <li><NavLink to="/about">About Us</NavLink></li>
       </ul>
     </div>
     <a className="btn btn-ghost text-xl">ToyTopia</a>
@@ -33,7 +34,8 @@ function Navbar() {
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
       <li><NavLink to="/">Home</NavLink></li>
-      <li><NavLink to="/profile">My Profile</NavLink></li>
+            <li><NavLink to="/profile">My Profile</NavLink></li>
+                  <li><NavLink to="/about">About Us</NavLink></li>
     </ul>
   </div>
         

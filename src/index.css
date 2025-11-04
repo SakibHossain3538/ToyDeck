@@ -25,5 +25,11 @@ body{
  /* In your CSS file */
  .bg-footer {
      background: linear-gradient(to right, #fbcfe8, #fde68a, #bfdbfe, #bbf7d0)
-     
+  
  }
+.gradient-text {
+    background: linear-gradient(to right, #e663ad, #ccb65c, #4f8dd8, #44c471);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

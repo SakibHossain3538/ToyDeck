@@ -4,8 +4,10 @@ import HomePage from "../Pages/HomePage";
 import Profile from "../Pages/Profile";
 import AppDetails from "../Pages/AppDetails";
 import LoginForm from "../Pages/Login";
-import SignupForm from "../Pages/Signup";
+import SignupForm from "../Pages/SignUp";
 import PrivateRoute from "../Components/PrivateRoute";
+import AboutUs from "../Pages/Aboutus";
+import ProfileProtectedRoute from "../Components/ProfileProtectedRoute";
 const router = createBrowserRouter([
      {
     path: "/",
@@ -17,7 +19,9 @@ const router = createBrowserRouter([
             },
             {
                 path: "/profile",
-                element:<Profile></Profile>
+                element: <ProfileProtectedRoute>
+                    <Profile></Profile>
+                </ProfileProtectedRoute>
             }, {
                 path: "/appDetails/:id",
                 element: <PrivateRoute>
@@ -29,6 +33,11 @@ const router = createBrowserRouter([
             }, {
                 path: "/signup",
                 element:<SignupForm></SignupForm>
+            },{
+                path: "/about",
+                element: <ProfileProtectedRoute>
+                    <AboutUs></AboutUs>
+                </ProfileProtectedRoute>
             }
     ]
   }
