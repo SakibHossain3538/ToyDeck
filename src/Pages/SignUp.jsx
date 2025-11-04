@@ -3,8 +3,20 @@ import { ToysContext } from "../Context/Context";
 import { useLocation, useNavigate } from "react-router";
 
 export default function SignupForm() {
-    const {createUser,updatePr,setLoading,user,setUser}=useContext(ToysContext)
+    const {createUser,updatePr,setLoading,user,setUser,signInwithGoogle}=useContext(ToysContext)
   const location = useLocation()
+    const handleGoogleSignin = () => {
+    console.log("google signin");
+    signInwithGoogle()
+      .then((res) => {
+        console.log(res);
+        setUser(res.user);
+        navigate(from);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   const from = location.state || "/";
   const navigate = useNavigate();
   useEffect(() => {
@@ -64,7 +76,21 @@ export default function SignupForm() {
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-8 mt-6">
       <h1 className="text-2xl font-bold mb-2">Create an account</h1>
 
-
+         <button
+        type="button" className="w-full flex items-center justify-center mt-6 mb-4 border-gray-300
+       rounded-lg hover:bg:gray-100 transition font-medium"
+        onClick={() =>handleGoogleSignin()}
+      > <img
+          src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+          alt="google"
+          className="w-5 h-5"
+        /> Login with Google
+      </button>
+      <div className="flex items-center my-4">
+        <div className="flex-1 h-px bg-gray-300"></div>
+        <span className="px-3 text-gray-500 text-sm">OR</span>
+         <div className="flex-1 h-px bg-gray-300"></div>
+        </div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className=" gap-4">
           <div>

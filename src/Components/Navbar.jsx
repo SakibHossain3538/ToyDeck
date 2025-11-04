@@ -42,9 +42,12 @@ function Navbar() {
     <div className="dropdown dropdown-end">
       <div tabIndex="0" role="button" className="avatar">
         <div className="w-10  rounded-full">
-          <img
-            alt="Tailwind CSS Navbar component"
-            src={user?.photoURL || "https://i.ibb.co.com/V0NKMLfC/31046197.jpg"} />
+                  <img
+                    className="cursor-pointer rounded-2xl"
+                    alt="Tailwind CSS Navbar component"
+                    src={user?.photoURL || "https://i.ibb.co.com/V0NKMLfC/31046197.jpg"}
+                      title={user.displayName}
+                  />
         </div>
       </div>
       <ul
