@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState,useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
@@ -13,7 +13,7 @@ export default function LoginForm({  }) {
   const from = location.state?.from?.pathname || "/";
   const [errors, setErrors] = useState({});
   const [show, setShow] = useState(false)
-  const { user, setUser, signInwithGoogle, signIn} = useContext(ToysContext)
+  const { user, setUser, signInwithGoogle, signIn ,setLoading,sendPassResetEmailFunc} = useContext(ToysContext)
    const handleGoogleSignin = () => {
     console.log("google signin");
     signInwithGoogle()
@@ -71,7 +71,26 @@ export default function LoginForm({  }) {
 
     }
       return err;
-   }
+  }
+    const emailRef = useRef(null);
+
+const handleForgetPassword = async () => {
+  const email = emailRef.current.value;
+  if (!email) {
+    toast.error("Please enter your email first");
+    return;
+  }
+  try {
+    setLoading(true);  
+    await sendPassResetEmailFunc(email); 
+    toast.success("Check your email to reset password 📧");
+    setLoading(false);
+  } catch (error) {
+    toast.error(error.message);
+    setLoading(false);
+  }
+};
+
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-8 mt-12">
       <h1 className="text-2xl font-bold mb-2">
@@ -100,7 +119,7 @@ export default function LoginForm({  }) {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Email</label>
-            <input name="email" type="email"
+            <input name="email" type="email"  ref={emailRef}
               className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
             
@@ -116,7 +135,6 @@ export default function LoginForm({  }) {
                            }</span>
               
           </div>
-          
         <div className="flex justify-between items-center text-sm">
           <label className="flex items-center gap-2">
             <input type="checkbox" className="w-4 h-4" />
@@ -129,6 +147,8 @@ export default function LoginForm({  }) {
           </button>
         </form>
       </div>
+      <p className="text-center mt-6 text-sm text-gray-600">Forget your password ?
+        <span className="text-blue-600 font-semibold hover:underline " onClick={handleForgetPassword}> Click here</span></p>
        <p className="text-center mt-6 text-sm text-gray-600">
         Don't have an account?{" "}
         <Link to="/signup"

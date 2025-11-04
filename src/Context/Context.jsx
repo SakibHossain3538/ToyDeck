@@ -4,7 +4,7 @@ import app from "../FireBase/Firebase_confi";
 import {
     createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged,
     signInWithEmailAndPassword, signInWithPopup, signOut,
-    updateProfile
+    updateProfile,sendPasswordResetEmail
 } from "firebase/auth"
 export const ToysContext = createContext();
 
@@ -48,14 +48,18 @@ export const ToysProvider = ({ children }) => {
   await updateProfile(auth.currentUser, { displayName, photoURL });
           setUser({ ...auth.currentUser, displayName, photoURL });
 };
-
+      const sendPassResetEmailFunc = (email) => {
+    setLoading(true);
+    return sendPasswordResetEmail(auth, email);
+  };
 
     const logOut = () => {
         setLoading(true)
         return signOut(auth)
     }
     const allData = {
-        toys,loading,user,setUser,signIn,createUser,signInwithGoogle,logOut,setLoading,updatePr
+        toys, loading, user, setUser, signIn, createUser, signInwithGoogle, logOut, setLoading, updatePr,
+        sendPassResetEmailFunc
     }
      return (
     <ToysContext.Provider value={allData}>
