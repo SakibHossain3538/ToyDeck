@@ -1,29 +1,33 @@
 import React, { useContext, useState,useEffect } from "react";
 import { ToysContext } from "../Context/Context";
 import { useLocation, useNavigate } from "react-router";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function SignupForm() {
     const {createUser,updatePr,setLoading,user,setUser,signInwithGoogle}=useContext(ToysContext)
   const location = useLocation()
-    const handleGoogleSignin = () => {
-    console.log("google signin");
-    signInwithGoogle()
-      .then((res) => {
-        console.log(res);
-        setUser(res.user);
-        navigate(from);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-  const from = location.state || "/";
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+      const from = location.state?.from?.pathname || "/";
+  const [errors, setErrors] = useState({});
+
   useEffect(() => {
   if (user) {
     navigate("/");
   }
 }, [user]);
+    const handleGoogleSignin = () => {      
+          signInwithGoogle()
+            .then((res) => {
+              setUser(res.user);
+                   toast.success("Login Success Full")
+                   setTimeout(() => {
+                  navigate(from, { replace: true });
+            }, 1000); 
+          })
+            .catch((e) => {
+             toast.error(e.message);
+            });
+        };
 
     const handleSubmit =async (e) => {
       e.preventDefault();
@@ -31,51 +35,53 @@ export default function SignupForm() {
     const email = form.email.value;
     const password = form.password.value;
     const photoUrl = form.photoUrl.value;
-      const name = form.name.value;
-    const valid = validate(form);
+    const name = form.name.value;
+      const agree = form.agree?.checked;
+       const valid = validate({ name, photoUrl, email, password, agree });
       setErrors(valid);
-      createUser(email, password)
-        .then((res) => {
-         
-          setUser(res.user)
-          navigate(from)
-          setLoading(false)
-          updatePr(name, photoUrl).then((res) => {
-             console.log("profile updated")
-          })
-        })
-        .catch((e) => {
-        console.log(e)
-      })
-   }
-
-  const [errors, setErrors] = useState({});
-  
-  function validate(form) {
-    const err = {};
-    const email = form.email.value.trim()
-    const password = form.password.value.trim()
-    const name = form.name.value.trim()
-    const strongPass = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-
-    if (!name) err.name = "Enter first name";
-    if (
-      !email ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    )
-      err.email = "Enter a valid email";
-    if (!password || password.length < 8)
-      err.password = "Password must be at least 8 characters";
-    if (!form.agree.checked) err.agree = "You must accept terms";
-    if (!strongPass.test(password)) {
-     err.password = "Password must include At least 6 digits,1 letter,1 number and 1 special character";
-    }
-    return err;
+      
+ if (Object.keys(valid).length > 0) return; 
+      try {
+        const res =
+          await createUser(email, password);
+          setUser(res.user);
+        setLoading(false);
+        await updatePr(name, photoUrl);
+        toast.success("Signup successful! ");
+        setTimeout(() => {
+          navigate(from, { replace: true });
+    }, 500);
+      }
+      catch (error) {
+    toast.error(error.message);
+    setLoading(false);
+    console.log(error);
   }
+};
+  function validate({ name, photoUrl, email, password, agree }) {
+  const err = {};
+  const strongPass =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  if (!name) err.name = "Enter your Name";
+  if (!photoUrl) err.photoUrl = "Enter your Photo URL";
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    err.email = "Enter a valid email";
+  if (!password || password.length < 8)
+    err.password = "Password must be at least 8 characters";
+  if (!agree) err.agree = "You must accept terms";
+  if (password && !strongPass.test(password))
+    err.password =
+      "Password must include at least 1 letter, 1 number, and 1 special character";
+  Object.values(err).forEach((msg) => toast.error(msg));
+
+  return err;
+}
+
   return (
     <div className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-8 mt-6">
       <h1 className="text-2xl font-bold mb-2">Create an account</h1>
-
+     <ToastContainer/>
          <button
         type="button" className="w-full flex items-center justify-center mt-6 mb-4 border-gray-300
        rounded-lg hover:bg:gray-100 transition font-medium"
@@ -99,9 +105,7 @@ export default function SignupForm() {
               name="name"
               className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-            )}
+        
           </div>
           <div>
             <label className="block text-sm font-medium mb-1 mt-1">Photo Url</label>
@@ -120,9 +124,7 @@ export default function SignupForm() {
             type="email"
               className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
           />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-          )}
+          
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
@@ -133,9 +135,7 @@ export default function SignupForm() {
               type="password"
               className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-            )}
+            
           </div>
         </div>
         <div>
@@ -161,9 +161,7 @@ export default function SignupForm() {
             </a>
           </label>
         </div>
-        {errors.agree && (
-          <p className="text-red-500 text-sm">{errors.agree}</p>
-        )}
+        
 
         <button
                   className="w-full bg-blue-600 text-white py-2 rounded-lg

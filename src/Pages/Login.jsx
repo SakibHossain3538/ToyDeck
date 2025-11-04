@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
@@ -20,9 +20,11 @@ export default function LoginForm({  }) {
       .then((res) => {
         console.log(res);
         setUser(res.user);
-        navigate(from);
-        navigate(from, { replace: true });
-      })
+             toast.success("Login Success Full")
+             setTimeout(() => {
+            navigate(from, { replace: true });
+      }, 1000); 
+    })
       .catch((e) => {
        toast.error(e.message);
       });
@@ -33,22 +35,23 @@ export default function LoginForm({  }) {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    const valid = validate(form);
-    setErrors(valid);
-    signIn(email, password)
-      .then((res)=> {
-        console.log(res)
-        setUser(res.user)
-        navigate(from)
-        console.log(user)
-      }).catch((error) =>{
-      toast.error(error.message)
-    })
+     const validErrors = validate(email, password);
+    setErrors(validErrors);
+    if (Object.keys(validErrors).length > 0) return; 
+
+   try {
+    const res = await signIn(email, password);
+    setUser(res.user);
+    toast.success("Login successful! ");
+    setTimeout(() => {
+      navigate(from, { replace: true });
+    }, 1000);
+  } catch (error) {
+    toast.error(error.message);
   }
-  function validate(form) {
+};
+  function validate(email,password) {
     const err = {};
-    const email = form.email.value.trim()
-    const password = form.password.value.trim()
     const strongPass = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     if (
       !email ||
@@ -100,11 +103,7 @@ export default function LoginForm({  }) {
             <input name="email" type="email"
               className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
             />
-            {
-              errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-              )
-              }
+            
           </div>
           <div className="relative">
            <label className="block text-sm font-medium mb-1">Password</label>

@@ -4,11 +4,11 @@ import { Link, NavLink } from 'react-router'
 import { ToysContext } from '../Context/Context'
 
 function Navbar() {
-  const { user, setuser, logOut } = useContext(ToysContext) 
+  const { user, setUser, logOut } = useContext(ToysContext) 
   const handleLogout = () => {
     logOut()
       .then(() => {
-      setuser(null)
+      setUser(null)
       }).catch((e) => {
       console.log(e)
     })

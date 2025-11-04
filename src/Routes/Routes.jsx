@@ -9,7 +9,6 @@ import PrivateRoute from "../Components/PrivateRoute";
 import AboutUs from "../Pages/Aboutus";
 import ProfileProtectedRoute from "../Components/ProfileProtectedRoute";
 import PageError from "../Components/PageError";
-import Loading from "../Components/Loading";
 const router = createBrowserRouter([
      {
     path: "/",
