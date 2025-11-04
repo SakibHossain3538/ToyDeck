@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import { ToysContext } from "../Context/Context";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function LoginForm({  }) {
     
@@ -19,12 +21,12 @@ export default function LoginForm({  }) {
         console.log(res);
         setUser(res.user);
         navigate(from);
+        navigate(from, { replace: true });
       })
       .catch((e) => {
-        console.log(e);
+       toast.error(e.message);
       });
   };
-navigate(from, { replace: true });
 
   const handleSubmit =async (e) => {
       e.preventDefault();
@@ -40,7 +42,7 @@ navigate(from, { replace: true });
         navigate(from)
         console.log(user)
       }).catch((error) =>{
-      console.log(error)
+      toast.error(error.message)
     })
   }
   function validate(form) {
@@ -53,12 +55,17 @@ navigate(from, { replace: true });
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     ) {
       err.email = "Enter a valid email";
+      toast.error("Enter a valid email");
     }
     if (!password) {
       err.password = "Enter your password";
+      toast.error("Enter your password");
+
     }
      if (!strongPass.test(password)) {
-     err.password = "Password must include At least 1 letter,1 number,1 special character";
+       err.password = "Password must include At least 1 letter,1 number,1 special character";
+           toast.error("Password must include at least 1 letter, 1 number, 1 special character");
+
     }
       return err;
    }
@@ -67,6 +74,7 @@ navigate(from, { replace: true });
       <h1 className="text-2xl font-bold mb-2">
         Welcome Back
       </h1>
+        <ToastContainer position="top-right" autoClose={3000} />
       <p className="text-gray-600 mb-6"> Login to continue</p>
       <button
         type="button" className="w-full flex items-center justify-center gap-2 border-gray-300
@@ -107,9 +115,7 @@ navigate(from, { replace: true });
             <span className="absolute right-4 top-9 text-2xl" onClick={() => { setShow(!show) }}>{show? <IoIosEye />
                  :   <IoIosEyeOff />
                            }</span>
-              {errors.password && (
-            <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-          )}
+              
           </div>
           
         <div className="flex justify-between items-center text-sm">

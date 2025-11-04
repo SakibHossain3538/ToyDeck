@@ -8,10 +8,13 @@ import SignupForm from "../Pages/SignUp";
 import PrivateRoute from "../Components/PrivateRoute";
 import AboutUs from "../Pages/Aboutus";
 import ProfileProtectedRoute from "../Components/ProfileProtectedRoute";
+import PageError from "../Components/PageError";
+import Loading from "../Components/Loading";
 const router = createBrowserRouter([
      {
     path: "/",
         element: <MainLayout></MainLayout>,
+        errorElement:<PageError></PageError>,
         children: [
             {
                 index: true,
@@ -38,7 +41,7 @@ const router = createBrowserRouter([
                 element: <ProfileProtectedRoute>
                     <AboutUs></AboutUs>
                 </ProfileProtectedRoute>
-            }
+            }, 
     ]
   }
 ])

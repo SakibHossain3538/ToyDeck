@@ -2,13 +2,14 @@ import { useContext } from 'react'
 import { ToysContext } from '../Context/Context'
 import { Navigate,useLocation } from 'react-router'
 import React from 'react'
+import Loading from './Loading'
 
-function About_protecte_route() {
+function About_protecte_route({children}) {
   const { user, loading } = useContext(ToysContext)
         const location = useLocation();
   
       if (loading) {
-         return <div>asdhfokn</div>
+         return <Loading></Loading>
       }
       if (user && user?.email) {
           return children

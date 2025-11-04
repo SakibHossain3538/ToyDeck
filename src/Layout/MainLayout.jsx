@@ -1,11 +1,13 @@
 import React from 'react'
 import Navbar from '../Components/Navbar'
-import { Outlet } from 'react-router'
+import { Outlet, } from 'react-router'
 import Footer from '../Components/Footer'
+import Loading from '../Components/Loading'
 
 function MainLayout() {
+
   return (
-      <div>
+    <div>
       <Navbar></Navbar>
       <Outlet></Outlet>
       <Footer></Footer>

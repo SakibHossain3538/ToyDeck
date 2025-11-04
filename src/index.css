@@ -2,13 +2,11 @@
 @plugin "daisyui";
 .btn {
     background: linear-gradient(30deg, #ff87b3, #f8db64, #74ffc8);
+    @apply px-4 py-2 rounded-lg font-bold text-gray-700;
     color: gray;
-    padding: 10px 14px;
-    border-radius: 10px;
     border: none;
     cursor: pointer;
-    margin: 0px 0px 0px 10px;
-    font-weight: bold;
+    margin-left: 10px;
 }
 .bg-toy {
  background: linear-gradient(to right, #fbcfe8, #fef9c3, #bfdbfe  );
@@ -22,7 +20,6 @@ body{
             font-weight: 600;
             box-shadow: 0 4px 12px rgba(124, 74, 255, 0.45);
  }
- /* In your CSS file */
  .bg-footer {
      background: linear-gradient(to right, #fbcfe8, #fde68a, #bfdbfe, #bbf7d0)
   

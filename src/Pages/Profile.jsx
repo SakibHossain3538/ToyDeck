@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { ToysContext } from '../Context/Context'
-import MyContainer from '../MyContainer.jsx/MyContainer'
 import { useNavigate } from "react-router";
+import MyContainer from '../MyContainer.jsx/MyContainer';
 
 function Profile() {
-  const { user, updatePr, setLoading, setUser } = useContext(ToysContext)
+  const { user, updatePr } = useContext(ToysContext)
   const navigate=useNavigate()
   const handleSubmit = async (e) => {
       e.preventDefault();
