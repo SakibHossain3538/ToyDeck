@@ -4,11 +4,11 @@ import HomePage from "../Pages/HomePage";
 import Profile from "../Pages/Profile";
 import AppDetails from "../Pages/AppDetails";
 import LoginForm from "../Pages/Login";
-import SignupForm from "../Pages/SignUp";
 import PrivateRoute from "../Components/PrivateRoute";
 import AboutUs from "../Pages/Aboutus";
 import ProfileProtectedRoute from "../Components/ProfileProtectedRoute";
 import PageError from "../Components/PageError";
+import SignUpForm from "../Pages/SignUp";
 const router = createBrowserRouter([
      {
     path: "/",
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
                 element: <LoginForm></LoginForm>
             }, {
                 path: "/signup",
-                element:<SignupForm></SignupForm>
+                element:<SignUpForm></SignUpForm>
             },{
                 path: "/about",
                 element: <ProfileProtectedRoute>

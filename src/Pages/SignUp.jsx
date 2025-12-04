@@ -3,8 +3,8 @@ import { ToysContext } from "../Context/Context";
 import { useLocation, useNavigate } from "react-router";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function SignupForm() {
-    const {createUser,updatePr,setLoading,user,setUser,signInwithGoogle}=useContext(ToysContext)
+export default function SignUpForm() {
+    const {createUser,updatePr,setLoading,user,setUser,signInwithGoogle,loading}=useContext(ToysContext)
    if (loading) return <Spinner />
   const location = useLocation()
     const navigate = useNavigate();

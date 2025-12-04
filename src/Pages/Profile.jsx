@@ -14,11 +14,11 @@ function Profile() {
             updatePr(name, photoUrl)
               .then(() => {
                    navigate(`/profile?name=${encodeURIComponent(name)}&photo=${encodeURIComponent(photoUrl)}`, { replace: true });
-                 console.log("Updated:", name, photoUrl)
+              
                 form.reset()
       })
       .catch((err) => {
-        console.log("Error updating profile:",err)
+       
       })
    }
   return (
